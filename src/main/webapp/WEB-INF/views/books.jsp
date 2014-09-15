@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf8" pageEncoding="utf8"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:choose>
 	<c:when test="${!empty author}">
 		<c:set var="title"><spring:message code="label.authorBooksList"/></c:set>
@@ -45,6 +45,7 @@
 	</div>
 </c:if>
 
+<sec:authorize ifAnyGranted="ROLE_ADMIN">
 <c:if test="${!empty showAdd}">
 	<div class="container">
 		<span class="push-right"><a href="<c:url value="/books/add"/>">
@@ -52,6 +53,7 @@
 		</a></span>
 	</div>
 </c:if>
+</sec:authorize>
 
 <div class="container">
 	<h3><spring:message code="label.booksList"/></h3>
@@ -61,7 +63,9 @@
 			<th><spring:message code="label.shortDescription"/></th>
 			<th><spring:message code="label.year"/></th>
 			<th><spring:message code="label.authors"/></th>
+			<sec:authorize ifAnyGranted="ROLE_ADMIN">
 			<th class="actions"><spring:message code="label.actions"/></th>
+			</sec:authorize>
 		</tr>
 		<c:forEach var="book" items="${booksList}">
             <tr>
@@ -73,10 +77,12 @@
 						<c:out value="${author}"/><br/>
 					</c:forEach>
 				</td>
+				<sec:authorize ifAnyGranted="ROLE_ADMIN">
 				<td>
 					<a href="<c:url value="/books/edit/${book.id}"/>"><spring:message code="label.modify"/></a>
 					<a href="<c:url value="/books/del/${book.id}"/>"><spring:message code="label.remove"/></a>
 				</td>
+				</sec:authorize>
             </tr>
         </c:forEach>
 	</table>

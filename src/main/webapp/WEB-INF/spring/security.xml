@@ -8,11 +8,11 @@
 
     <http>
         <intercept-url pattern="/authors/add*" access="ROLE_ADMIN" />
-        <intercept-url pattern="/authors/del*" access="ROLE_ADMIN" />
-        <intercept-url pattern="/authors/edit*" access="ROLE_ADMIN" />
+        <intercept-url pattern="/authors/del/*" access="ROLE_ADMIN" />
+        <intercept-url pattern="/authors/edit/*" access="ROLE_ADMIN" />
         <intercept-url pattern="/books/add*" access="ROLE_ADMIN" />
-        <intercept-url pattern="/books/del*" access="ROLE_ADMIN" />
-        <intercept-url pattern="/books/edit*" access="ROLE_ADMIN" />
+        <intercept-url pattern="/books/del/*" access="ROLE_ADMIN" />
+        <intercept-url pattern="/books/edit/*" access="ROLE_ADMIN" />
         <intercept-url pattern="/**" access="ROLE_USER" />
         <form-login />
         <logout logout-url="/logout" />
