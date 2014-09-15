@@ -55,18 +55,13 @@ public class BookController {
 
     @RequestMapping(value = "/edit/{bookId}", method = RequestMethod.GET)
     public String showEditBookForm(@PathVariable("bookId") Long bookId, Model model) {
-        model.addAttribute("edit", true);
         Book book = bookService.getBook(bookId);
         if (book == null) {
             return "redirect:/books";
         }
-        List<Long> authorsId = new LinkedList<>();
-        for (Author a : book.getAuthors()) {
-            authorsId.add(a.getId());
-        }
+        model.addAttribute("edit", true);
         model.addAttribute("book", book);
         model.addAttribute("allAuthors", authorService.listAuthors());
-        model.addAttribute("selectedIds", authorsId);
         return "bookForm";
     }
 
@@ -74,6 +69,7 @@ public class BookController {
     public String updateBook(@Valid @ModelAttribute("book") Book book, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("edit", true);
+            model.addAttribute("allAuthors", authorService.listAuthors());
             return "bookForm";
         }
         bookService.updateBook(book);

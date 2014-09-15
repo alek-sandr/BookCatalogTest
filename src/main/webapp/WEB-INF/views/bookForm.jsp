@@ -53,8 +53,8 @@
 			<select size="6" multiple name="authors" required>
 				<c:forEach var="author" items="${allAuthors}">
 					<option
-					<c:forEach var="id" items="${selectedIds}">
-						<c:if test="${id eq author.id}">selected</c:if>
+					<c:forEach var="bookAuthor" items="${book.authors}">
+						<c:if test="${bookAuthor.id eq author.id}">selected</c:if>
 					</c:forEach>
 					value="${author.id}"><c:out value="${author.lastName}"/>, <c:out value="${author.firstName}"/></option>
 				</c:forEach>
