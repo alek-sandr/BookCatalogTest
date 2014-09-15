@@ -7,4 +7,6 @@ public interface UserDAO {
     public void addUser(User user);
 
     public void deleteUser(Long id);
+
+    public User getUserByLogin(String login);
 }

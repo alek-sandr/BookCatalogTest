@@ -20,10 +20,6 @@
 --
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `bookcatalog` /*!40100 DEFAULT CHARACTER SET utf8 */;
-CREATE USER bookcatalog@localhost identified BY 'secret';
-CREATE USER bookcatalog@127.0.0.1 identified BY 'secret';
-GRANT ALL privileges ON bookcatalog.* TO bookcatalog@localhost;
-GRANT ALL privileges ON bookcatalog.* TO bookcatalog@127.0.0.1;
 
 USE `bookcatalog`;
 
@@ -114,10 +110,12 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `IS_ADMIN` bit(1) NOT NULL,
   `LOGIN` varchar(30) NOT NULL,
   `PASSWORD` varchar(30) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `UK_l3c3ahdulnjx8bt2ivgyvh1ss` (`LOGIN`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,6 +124,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'','dbadmin','dbadmin'),(2,'\0','dbuser','dbuser');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -138,4 +137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-15  4:06:04
+-- Dump completed on 2014-09-16  1:01:06

@@ -20,13 +20,21 @@
 
     <global-method-security secured-annotations="enabled" />
 
-    <authentication-manager>
+    <authentication-manager alias="authenticationManager">
         <authentication-provider>
             <user-service>
-                <user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
-                <user name="user" password="user" authorities="ROLE_USER" />
+                <user name="testadmin" password="testadmin" authorities="ROLE_USER, ROLE_ADMIN" />
+                <user name="testuser" password="testuser" authorities="ROLE_USER" />
             </user-service>
         </authentication-provider>
+        <authentication-provider user-service-ref="userService">
+            <!-- <password-encoder ref="passwordEncoder" /> -->
+        </authentication-provider>
     </authentication-manager>
+
+    <beans:bean id="userService" class="com.testexercise.bookcatalog.service.UserServiceImpl" />
+
+    <!--<beans:bean name="passwordEncoder"
+        class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" /> -->
 
 </beans:beans>
