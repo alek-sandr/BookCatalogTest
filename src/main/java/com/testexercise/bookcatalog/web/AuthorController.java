@@ -1,6 +1,6 @@
 package com.testexercise.bookcatalog.web;
 
-import com.testexercise.bookcatalog.domen.Author;
+import com.testexercise.bookcatalog.domain.Author;
 import com.testexercise.bookcatalog.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

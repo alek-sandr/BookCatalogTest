@@ -1,7 +1,7 @@
 package com.testexercise.bookcatalog.dao;
 
-import com.testexercise.bookcatalog.domen.Author;
-import com.testexercise.bookcatalog.domen.Book;
+import com.testexercise.bookcatalog.domain.Author;
+import com.testexercise.bookcatalog.domain.Book;
 
 import java.util.List;
 

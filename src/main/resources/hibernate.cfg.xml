@@ -5,8 +5,8 @@
 
 <hibernate-configuration>
     <session-factory>
-        <mapping class="com.testexercise.bookcatalog.domen.User" />
-        <mapping class="com.testexercise.bookcatalog.domen.Author" />
-        <mapping class="com.testexercise.bookcatalog.domen.Book" />
+        <mapping class="com.testexercise.bookcatalog.domain.User" />
+        <mapping class="com.testexercise.bookcatalog.domain.Author" />
+        <mapping class="com.testexercise.bookcatalog.domain.Book" />
     </session-factory>
 </hibernate-configuration>

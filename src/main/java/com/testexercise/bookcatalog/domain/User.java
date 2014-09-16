@@ -1,4 +1,4 @@
-package com.testexercise.bookcatalog.domen;
+package com.testexercise.bookcatalog.domain;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;

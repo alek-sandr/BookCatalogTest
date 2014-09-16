@@ -1,10 +1,9 @@
 package com.testexercise.bookcatalog.service;
 
 import com.testexercise.bookcatalog.dao.AuthorDAO;
-import com.testexercise.bookcatalog.domen.Author;
-import com.testexercise.bookcatalog.domen.Book;
+import com.testexercise.bookcatalog.domain.Author;
+import com.testexercise.bookcatalog.domain.Book;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

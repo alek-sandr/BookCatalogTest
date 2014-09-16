@@ -1,7 +1,6 @@
 package com.testexercise.bookcatalog.web;
 
-import com.testexercise.bookcatalog.domen.Author;
-import com.testexercise.bookcatalog.domen.Book;
+import com.testexercise.bookcatalog.domain.Book;
 import com.testexercise.bookcatalog.service.AuthorService;
 import com.testexercise.bookcatalog.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.LinkedList;
 import java.util.List;
 
 @Controller

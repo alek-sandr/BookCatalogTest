@@ -1,8 +1,7 @@
-package com.testexercise.bookcatalog.domen;
+package com.testexercise.bookcatalog.domain;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.validation.FieldError;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

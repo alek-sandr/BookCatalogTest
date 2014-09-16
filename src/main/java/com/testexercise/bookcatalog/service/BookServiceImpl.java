@@ -1,7 +1,7 @@
 package com.testexercise.bookcatalog.service;
 
 import com.testexercise.bookcatalog.dao.BookDAO;
-import com.testexercise.bookcatalog.domen.Book;
+import com.testexercise.bookcatalog.domain.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

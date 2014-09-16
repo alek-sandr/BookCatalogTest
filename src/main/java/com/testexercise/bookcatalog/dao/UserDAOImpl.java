@@ -1,9 +1,8 @@
 package com.testexercise.bookcatalog.dao;
 
-import com.testexercise.bookcatalog.domen.User;
+import com.testexercise.bookcatalog.domain.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,12 +11,9 @@ import java.util.List;
 public class UserDAOImpl  implements UserDAO {
     @Autowired
     private SessionFactory sessionFactory;
-    //@Autowired
-    //private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public void addUser(User user) {
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
         sessionFactory.getCurrentSession().save(user);
     }
 
@@ -36,5 +32,10 @@ public class UserDAOImpl  implements UserDAO {
                 .setString("login", login).list();
         if (users.isEmpty()) return null;
         return users.get(0);
+    }
+
+    @Override
+    public List<User> listUsers() {
+        return sessionFactory.getCurrentSession().createQuery("from User").list();
     }
 }

@@ -1,14 +1,13 @@
 package com.testexercise.bookcatalog.dao;
 
-import com.testexercise.bookcatalog.domen.Author;
-import com.testexercise.bookcatalog.domen.Book;
+import com.testexercise.bookcatalog.domain.Author;
+import com.testexercise.bookcatalog.domain.Book;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Repository
