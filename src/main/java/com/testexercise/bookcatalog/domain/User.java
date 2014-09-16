@@ -5,7 +5,11 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +29,7 @@ public class User implements UserDetails {
 
     @NotBlank
     @Length(min = 8, max = 30)
-    @Column(name = "PASSWORD", nullable = false, length = 30)
+    @Column(name = "PASSWORD", nullable = false, length = 128)
     private String password;
 
     @Column(name = "IS_ADMIN", nullable = false)

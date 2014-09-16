@@ -38,7 +38,8 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addAuthor(@Valid @ModelAttribute("author") Author author, BindingResult result, Model model) {
+    public String addAuthor(@Valid @ModelAttribute("author") Author author,
+                            BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "authorForm";
         }

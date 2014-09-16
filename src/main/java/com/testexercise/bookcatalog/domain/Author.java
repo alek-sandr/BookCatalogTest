@@ -3,7 +3,12 @@ package com.testexercise.bookcatalog.domain;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +29,6 @@ public class Author {
     @Length(min = 1, max = 30)
     @Column(name = "LASTNAME", nullable = false, length = 30)
     private String lastName;
-
 
     @ManyToMany(mappedBy = "authors")
     private List<Book> books = new ArrayList<>();

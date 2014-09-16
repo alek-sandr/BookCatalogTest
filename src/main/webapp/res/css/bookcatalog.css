@@ -22,6 +22,7 @@ p {
 
 .nav-container {
   padding: 10px 10px 15px 10px;
+  font-size: 90%;
 }
 
 .err-container {
@@ -43,22 +44,27 @@ table {
   height:100%;
   border:1px solid black;
   border-collapse: collapse;
-} 
+}
+
 td,th {
   border:1px solid black;
   padding: 3px;
 }
+
 tr:hover td{
-  
+  background-color: #64ff64;
 }
+
 tr:nth-child(even){
-  background-color:#eeeeee;
+  background-color: #eeeeee;
 }
+
 th {
   text-align: left;
   font-weight: normal;
   background-color:#aaaaaa;
 }
+
 th.actions {
   width: 25%;
 }
@@ -94,12 +100,7 @@ input,textarea,select {
 .form-group {
   padding-bottom: 10px;
 }
-/*
-.form-group:before, .form-group:after {
-  display: table;
-  content: " ";
-}
-*/
+
 .form-group:after {
   clear: both;
 }

@@ -20,12 +20,11 @@ public class UserController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-
-    @RequestMapping(method = RequestMethod.GET)
-    public String listAuthors(Model model) {
-        model.addAttribute("authorsList", userService.listUsers());
-        return "authors";
-    }
+    /*@RequestMapping(method = RequestMethod.GET)
+    public String listUsers(Model model) {
+        model.addAttribute("usersList", userService.listUsers());
+        return "users";
+    }*/
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String showAddForm() {
@@ -39,7 +38,7 @@ public class UserController {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.addUser(user);
-        return "redirect:/authors";
+        return "redirect:/users";
     }
 
 }
