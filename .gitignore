@@ -1,4 +1,6 @@
-*.iml
-*.class
 .idea/
 target/
+*.iml
+readme.txt
+*.class
+.gitignore

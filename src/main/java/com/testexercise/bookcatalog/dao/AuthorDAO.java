@@ -1,21 +1,18 @@
 package com.testexercise.bookcatalog.dao;
 
-import com.testexercise.bookcatalog.domain.Author;
-import com.testexercise.bookcatalog.domain.Book;
-
-import java.util.List;
+import com.testexercise.bookcatalog.events.author.*;
 
 public interface AuthorDAO {
 
-    public void addAuthor(Author author);
+    public AuthorCreatedEvent addAuthor(CreateAuthorEvent createAuthorEvent);
 
-    public void updateAuthor(Author author);
+    public AuthorEvent getAuthor(RequestAuthorEvent requestAuthorEvent);
 
-    public List<Author> listAuthors();
+    public AuthorEvent getAuthorWithBooks(RequestAuthorEvent requestAuthorEvent);
 
-    public boolean deleteAuthor(Long id);
+    public AllAuthorsEvent listAuthors(RequestAllAuthorsEvent requestAllAuthorsEvent);
 
-    public Author getAuthor(Long id);
+    public AuthorUpdatedEvent updateAuthor(UpdateAuthorEvent updateAuthorEvent);
 
-    public List<Book> getAuthorBooks(Long authorId);
+    public AuthorDeletedEvent deleteAuthor(DeleteAuthorEvent deleteAuthorEvent);
 }

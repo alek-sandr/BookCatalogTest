@@ -1,12 +1,10 @@
 package com.testexercise.bookcatalog.service;
 
 import com.testexercise.bookcatalog.dao.BookDAO;
-import com.testexercise.bookcatalog.domain.Book;
+import com.testexercise.bookcatalog.events.book.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -15,37 +13,37 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public Book getBook(Long id) {
-        return bookDAO.getBook(id);
+    public BookCreatedEvent createBook(CreateBookEvent createBookEvent) {
+        return bookDAO.addBook(createBookEvent);
     }
 
     @Override
     @Transactional
-    public void addBook(Book book) {
-        bookDAO.addBook(book);
+    public BookEvent getBook(RequestBookEvent requestBookEvent) {
+        return bookDAO.getBook(requestBookEvent);
     }
 
     @Override
     @Transactional
-    public void updateBook(Book book) {
-        bookDAO.updateBook(book);
+    public BooksEvent listBooks(RequestAllBooksEvent requestAllBooksEvent) {
+        return bookDAO.listBooks(requestAllBooksEvent);
     }
 
     @Override
     @Transactional
-    public List<Book> listBooks() {
-        return bookDAO.listBooks();
+    public BookUpdatedEvent updateBook(UpdateBookEvent updateBookEvent) {
+        return bookDAO.updateBook(updateBookEvent);
     }
 
     @Override
     @Transactional
-    public void deleteBook(Long id) {
-        bookDAO.deleteBook(id);
+    public BookDeletedEvent deleteBook(DeleteBookEvent deleteBookEvent) {
+        return bookDAO.deleteBook(deleteBookEvent);
     }
 
     @Override
     @Transactional
-    public List<Book> searchBook(String query) {
-        return bookDAO.searchBook(query);
+    public BooksEvent searchBook(SearchBookEvent searchBookEvent) {
+        return bookDAO.searchBook(searchBookEvent);
     }
 }

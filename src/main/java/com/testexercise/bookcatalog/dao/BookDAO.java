@@ -1,20 +1,18 @@
 package com.testexercise.bookcatalog.dao;
 
-import com.testexercise.bookcatalog.domain.Book;
-
-import java.util.List;
+import com.testexercise.bookcatalog.events.book.*;
 
 public interface BookDAO {
 
-    public void addBook(Book book);
+    public BookCreatedEvent addBook(CreateBookEvent createBookEvent);
 
-    public void updateBook(Book book);
+    public BookEvent getBook(RequestBookEvent requestBookEvent);
 
-    public List<Book> listBooks();
+    public BooksEvent listBooks(RequestAllBooksEvent requestAllBooksEvent);
 
-    public void deleteBook(Long id);
+    public BookUpdatedEvent updateBook(UpdateBookEvent updateBookEvent);
 
-    public Book getBook(Long id);
+    public BookDeletedEvent deleteBook(DeleteBookEvent deleteBookEvent);
 
-    public List<Book> searchBook(String query);
+    public BooksEvent searchBook(SearchBookEvent searchBookEvent);
 }

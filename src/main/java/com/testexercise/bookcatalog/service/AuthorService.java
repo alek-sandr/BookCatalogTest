@@ -1,21 +1,18 @@
 package com.testexercise.bookcatalog.service;
 
-import com.testexercise.bookcatalog.domain.Author;
-import com.testexercise.bookcatalog.domain.Book;
-
-import java.util.List;
+import com.testexercise.bookcatalog.events.author.*;
 
 public interface AuthorService {
 
-    public void addAuthor(Author author);
+    public AuthorCreatedEvent createAuthor(CreateAuthorEvent createAuthorEvent);
 
-    public void updateAuthor(Author author);
+    public AuthorEvent requestAuthor(RequestAuthorEvent requestAuthorEvent);
 
-    public List<Author> listAuthors();
+    public AuthorEvent requestAuthorWithBooks(RequestAuthorEvent requestAuthorEvent);
 
-    public boolean deleteAuthor(Long id);
+    public AllAuthorsEvent requestAllAuthors(RequestAllAuthorsEvent requestAllAuthorsEvent);
 
-    public Author getAuthor(Long id);
+    public AuthorUpdatedEvent updateAuthor(UpdateAuthorEvent updateAuthorEvent);
 
-    public List<Book> getAuthorBooks(Long authorId);
+    public AuthorDeletedEvent deleteAuthor(DeleteAuthorEvent deleteAuthorEvent);
 }

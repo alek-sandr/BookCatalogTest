@@ -1,6 +1,11 @@
 package com.testexercise.bookcatalog.web;
 
 import com.testexercise.bookcatalog.domain.Book;
+import com.testexercise.bookcatalog.events.author.AllAuthorsEvent;
+import com.testexercise.bookcatalog.events.author.AuthorEvent;
+import com.testexercise.bookcatalog.events.author.RequestAllAuthorsEvent;
+import com.testexercise.bookcatalog.events.author.RequestAuthorEvent;
+import com.testexercise.bookcatalog.events.book.*;
 import com.testexercise.bookcatalog.service.AuthorService;
 import com.testexercise.bookcatalog.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,41 +30,50 @@ public class BookController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String listBooks(Model model) {
-        model.addAttribute("booksList", bookService.listBooks());
+        List<Book> allBooks = bookService.listBooks(new RequestAllBooksEvent()).getBooks();
+        model.addAttribute("booksList", allBooks);
         return "books";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String newBook(Model model) {
-        model.addAttribute("allAuthors", authorService.listAuthors());
+        AllAuthorsEvent aae = authorService.requestAllAuthors(new RequestAllAuthorsEvent());
+        model.addAttribute("allAuthors", aae.getAuthors());
         return "bookForm";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addBook(@Valid @ModelAttribute("book") Book book, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("allAuthors", authorService.listAuthors());
+            AllAuthorsEvent aae = authorService.requestAllAuthors(new RequestAllAuthorsEvent());
+            model.addAttribute("allAuthors", aae.getAuthors());
             return "bookForm";
         }
-        bookService.addBook(book);
+        bookService.createBook(new CreateBookEvent(book));
         return "redirect:/books";
     }
 
     @RequestMapping("/del/{bookId}")
     public String deleteBook(@PathVariable("bookId") Long bookId) {
-        bookService.deleteBook(bookId);
-        return "redirect:/books";
+        BookDeletedEvent bde = bookService.deleteBook(new DeleteBookEvent(bookId));
+        if (bde.isDeletionCompleted()) {
+            return "redirect:/books";
+        } else {
+            return "404";
+        }
     }
 
     @RequestMapping(value = "/edit/{bookId}", method = RequestMethod.GET)
     public String showEditBookForm(@PathVariable("bookId") Long bookId, Model model) {
-        Book book = bookService.getBook(bookId);
-        if (book == null) {
-            return "redirect:/books";
+        BookEvent be = bookService.getBook(new RequestBookEvent(bookId));
+        if (!be.isEntityFound()) {
+            return "404";
         }
+        Book book = be.getBook();
         model.addAttribute("edit", true);
         model.addAttribute("book", book);
-        model.addAttribute("allAuthors", authorService.listAuthors());
+        AllAuthorsEvent aae = authorService.requestAllAuthors(new RequestAllAuthorsEvent());
+        model.addAttribute("allAuthors", aae.getAuthors());
         return "bookForm";
     }
 
@@ -67,11 +81,16 @@ public class BookController {
     public String updateBook(@Valid @ModelAttribute("book") Book book, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("edit", true);
-            model.addAttribute("allAuthors", authorService.listAuthors());
+            AllAuthorsEvent aae = authorService.requestAllAuthors(new RequestAllAuthorsEvent());
+            model.addAttribute("allAuthors", aae.getAuthors());
             return "bookForm";
         }
-        bookService.updateBook(book);
-        return "redirect:/books";
+        BookUpdatedEvent bue = bookService.updateBook(new UpdateBookEvent(book.getId(), book));
+        if (bue.isEntityFound()) {
+            return "redirect:/books";
+        } else {
+            return "404";
+        }
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -81,7 +100,8 @@ public class BookController {
         }
         ModelAndView mav = new ModelAndView("books");
         mav.addObject("search", true);
-        mav.addObject("booksList", bookService.searchBook(query));
+        BooksEvent be = bookService.searchBook(new SearchBookEvent(query));
+        mav.addObject("booksList", be.getBooks());
         return mav;
     }
 
@@ -104,8 +124,8 @@ public class BookController {
                 else if(element instanceof Long) {
                     id = (Long) element;
                 }
-
-                return id != null ? authorService.getAuthor(id) : null;
+                AuthorEvent ae = authorService.requestAuthor(new RequestAuthorEvent(id));
+                return ae.getAuthor();
             }
         });
     }
