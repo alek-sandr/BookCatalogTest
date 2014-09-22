@@ -1,5 +1,9 @@
 package com.testexercise.bookcatalog.web;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.testexercise.bookcatalog.domain.Author;
 import com.testexercise.bookcatalog.events.author.*;
 import com.testexercise.bookcatalog.service.AuthorService;
@@ -7,18 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/authors")
 public class AuthorController {
     @Autowired
     private AuthorService authorService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @RequestMapping(method = RequestMethod.GET)
     public String listAuthors(Model model) {
@@ -94,6 +98,32 @@ public class AuthorController {
             return "redirect:/authors";
         } else {
             return "404";
+        }
+    }
+
+    @RequestMapping(value = "deleteAuthor", method = RequestMethod.POST,
+            consumes="application/json", produces="application/json")
+    @ResponseBody
+    public String deleteAuthorAJAX(@RequestBody String request) {
+        try {
+            JsonNode data = objectMapper.readTree(request);
+            Long id = data.get("id").asLong(0L);
+            AuthorDeletedEvent ade = authorService
+                    .deleteAuthor(new DeleteAuthorEvent(id));
+            ObjectNode answer = new ObjectNode(JsonNodeFactory.instance);
+            if (ade.isDeletionCompleted()) {
+                answer.put("success", true);
+            } else if (!ade.isEntityFound()) {
+                answer.put("success", false);
+                answer.put("message", "Unable to delete author. Author not found!");
+            } else {
+                answer.put("success", false);
+                answer.put("message", "Unable to delete author. It has books co-authored with other authors.");
+            }
+            return objectMapper.writeValueAsString(answer);
+        } catch (IOException e) {
+            //e.printStackTrace();
+            return "{\"success\":0, \"message\":\"Bad request!\"}";
         }
     }
 }

@@ -1,10 +1,11 @@
 package com.testexercise.bookcatalog.web;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.testexercise.bookcatalog.domain.Book;
-import com.testexercise.bookcatalog.events.author.AllAuthorsEvent;
-import com.testexercise.bookcatalog.events.author.AuthorEvent;
-import com.testexercise.bookcatalog.events.author.RequestAllAuthorsEvent;
-import com.testexercise.bookcatalog.events.author.RequestAuthorEvent;
+import com.testexercise.bookcatalog.events.author.*;
 import com.testexercise.bookcatalog.events.book.*;
 import com.testexercise.bookcatalog.service.AuthorService;
 import com.testexercise.bookcatalog.service.BookService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -27,6 +29,8 @@ public class BookController {
     private BookService bookService;
     @Autowired
     private AuthorService authorService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @RequestMapping(method = RequestMethod.GET)
     public String listBooks(Model model) {
@@ -128,5 +132,28 @@ public class BookController {
                 return ae.getAuthor();
             }
         });
+    }
+
+    @RequestMapping(value = "deleteBook", method = RequestMethod.POST,
+            consumes="application/json", produces="application/json")
+    @ResponseBody
+    public String deleteBookAJAX(@RequestBody String request) {
+        try {
+            JsonNode data = objectMapper.readTree(request);
+            Long id = data.get("id").asLong(0L);
+            BookDeletedEvent bde = bookService
+                    .deleteBook(new DeleteBookEvent(id));
+            ObjectNode answer = new ObjectNode(JsonNodeFactory.instance);
+            if (bde.isEntityFound()) {
+                answer.put("success", true);
+            } else {
+                answer.put("success", false);
+                answer.put("message", "Unable to delete book. Book not found!");
+            }
+            return objectMapper.writeValueAsString(answer);
+        } catch (IOException e) {
+            //e.printStackTrace();
+            return "{\"success\":0, \"message\":\"Bad request!\"}";
+        }
     }
 }

@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,8 @@ public class Book {
     @Column(name = "YEAR", nullable = false)
     private int year;
 
+    @NotNull
+    @Size(min = 1)
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "BOOK_AUTHOR",
             joinColumns = {@JoinColumn(name = "BOOK_ID", nullable = false)},

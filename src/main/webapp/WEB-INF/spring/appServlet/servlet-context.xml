@@ -22,6 +22,8 @@
         <beans:property name="suffix" value=".jsp" />
     </beans:bean>
 
+    <beans:bean class="com.fasterxml.jackson.databind.ObjectMapper" />
+
     <!-- Файл с настройками контроллеров -->
     <beans:import resource="controllers.xml" />
 

@@ -68,7 +68,7 @@
 			</sec:authorize>
 		</tr>
 		<c:forEach var="book" items="${booksList}">
-            <tr>
+            <tr id="${book.id}">
 				<td><c:out value="${book.title}"/></td>
 				<td><c:out value="${book.description}"/></td>
 				<td><c:out value="${book.year}"/></td>
@@ -80,13 +80,14 @@
 				<sec:authorize ifAnyGranted="ROLE_ADMIN">
 				<td>
 					<a href="<c:url value="/books/edit/${book.id}"/>"><spring:message code="label.modify"/></a>
-					<a href="<c:url value="/books/del/${book.id}"/>"><spring:message code="label.remove"/></a>
+					<a class="delete_book" href="<c:url value="/books/del/${book.id}"/>"><spring:message code="label.remove"/></a>
 				</td>
 				</sec:authorize>
             </tr>
         </c:forEach>
 	</table>
 </div>
-
+<script src="<c:url value="/res/js/jquery-1.11.1.min.js"/>"></script>
+<script src="<c:url value="/res/js/bookcatalog.js"/>"></script>
 </body>
 </html>

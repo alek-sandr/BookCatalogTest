@@ -34,13 +34,13 @@
 			<th class="actions"><spring:message code="label.actions"/></th>
 		</tr>
 		<c:forEach var="author" items="${authorsList}">
-            <tr>
+            <tr id="${author.id}">
 				<td><c:out value="${author.lastName}"/></td>
 				<td><c:out value="${author.firstName}"/></td>
 				<td>
 					<sec:authorize ifAnyGranted="ROLE_ADMIN">
 					<a href="<c:url value="/authors/edit/${author.id}"/>"><spring:message code="label.modify"/></a>
-					<a href="<c:url value="/authors/del/${author.id}"/>"><spring:message code="label.remove"/></a>
+					<a class="delete_author" href="<c:url value="/authors/del/${author.id}"/>"><spring:message code="label.remove"/></a>
 					</sec:authorize>
 					<a href="<c:url value="/authors/${author.id}/books"/>"><spring:message code="label.booksList"/></a>
 				</td>
@@ -48,6 +48,7 @@
         </c:forEach>
 	</table>
 </div>
-
+<script src="<c:url value="/res/js/jquery-1.11.1.min.js"/>"></script>
+<script src="<c:url value="/res/js/bookcatalog.js"/>"></script>
 </body>
 </html>
