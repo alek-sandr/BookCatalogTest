@@ -17,11 +17,8 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>${title}</title>
-	<link rel="stylesheet" href="<c:url value="/res/css/bookcatalog.css"/>">
-</head>
+<c:set var="pageTitle">${title}</c:set>
+<%@include file="includes/head.jsp" %>
 <body>
 
 <c:set var="navElements">
@@ -32,39 +29,14 @@
 <%@include file="includes/header.jsp" %>
 
 <div class="container">
-	<form action="${actionPath}" method="post">
-		<p><strong><spring:message code="label.fillFieldsAndPressButton"/></strong>
-			<button type="submit"><c:out value="${buttonText}"/></button>
-		</p>
-		<div class="form-group">
-			<label class="left-label"><spring:message code="book.title"/>:</label>
-			<input type="text" name="title" value="<c:out value="${book.title}"/>" required>
-		</div>
-		<div class="form-group">
-			<label class="left-label"><spring:message code="book.description"/>:</label>
-			<textarea rows="7" type="text" name="description" required><c:out value="${book.description}"/></textarea>
-		</div>
-		<div class="form-group">
-			<label class="left-label"><spring:message code="book.year"/>:</label>
-			<input type="text" name="year" value="<c:out value="${book.year}"/>" required>
-		</div>
-		<div class="form-group">
-			<label class="left-label"><spring:message code="book.authors"/>:</label>
-			<select size="6" multiple name="authors" required>
-				<c:forEach var="author" items="${allAuthors}">
-					<option
-					<c:forEach var="bookAuthor" items="${book.authors}">
-						<c:if test="${bookAuthor.id eq author.id}">selected</c:if>
-					</c:forEach>
-					value="${author.id}"><c:out value="${author.lastName}"/>, <c:out value="${author.firstName}"/></option>
-				</c:forEach>
-			</select>
-		</div>
-		<input type="hidden" name="id" value="${book.id}">
-	</form>
+	<h3>${title}</h3>
+	<br/>
 	<spring:hasBindErrors name="book">
-	<div class="err-container">
-		<h3><spring:message code="label.fixErrors"></spring:message></h3>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+    	<button type="button" class="close" data-dismiss="alert">
+    	    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+    	</button>
+		<strong><spring:message code="label.fixErrors"></spring:message></strong><br/>
 		<c:forEach var="error" items="${errors.allErrors}">
 			<p>
 				<spring:message code="label.field"></spring:message> 
@@ -74,7 +46,50 @@
 		</c:forEach>
 	</div>
 	</spring:hasBindErrors>
+	<form class="form-horizontal" action="${actionPath}" method="post">
+		<div class="form-group form-group-sm">
+			<label class="control-label col-sm-2"><spring:message code="book.title"/>:</label>
+			<div class="col-sm-9">
+				<input class="form-control" type="text" name="title" value="<c:out value="${book.title}"/>" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2"><spring:message code="book.description"/>:</label>
+			<div class="col-sm-9">
+				<textarea class="form-control" rows="5" type="text" name="description" required><c:out value="${book.description}"/></textarea>
+			</div>
+		</div>
+		<div class="form-group form-group-sm">
+			<label class="control-label col-sm-2"><spring:message code="book.year"/>:</label>
+			<div class="col-sm-9">
+				<input class="form-control" type="number" name="year" value="<c:out value="${book.year}"/>" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2"><spring:message code="book.authors"/>:</label>
+			<div class="col-sm-9">
+				<select class="form-control" size="6" multiple name="authors" required>
+				<c:forEach var="author" items="${allAuthors}">
+					<option
+					<c:forEach var="bookAuthor" items="${book.authors}">
+						<c:if test="${bookAuthor.id eq author.id}">selected</c:if>
+					</c:forEach>
+					value="${author.id}"><c:out value="${author.lastName}"/>, <c:out value="${author.firstName}"/></option>
+				</c:forEach>
+				</select>
+			</div>
+		</div>
+		<!--<label><spring:message code="label.fillFieldsAndPressButton"/></label>-->
+		<div class="form-group form-group-sm">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button class="btn btn-primary" type="submit"><c:out value="${buttonText}"/></button>
+			</div>
+		</div>
+		<input type="hidden" name="id" value="${book.id}">
+	</form>
 </div>
+
+<%@include file="includes/footer.jsp" %>
 
 </body>
 </html>

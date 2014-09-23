@@ -1,17 +1,11 @@
-<div class="caption">
-    <h2><spring:message code="label.title"/></h2>
-</div>
-
-<div class="nav-container">
-	<div class="block-right">
-		<a href="<c:url value="/logout"/>">
-			<spring:message code="label.logout"/>
-		</a>
-	</div>
-	<div>
+<div class="container">
+    <div class="caption">
+        <strong><spring:message code="label.title"/></strong>
+    </div>
+	<ol class="breadcrumb">
 		<c:forTokens var="element" items="${navElements}" delims=";" varStatus="status">
-			${element}
-			<c:if test="${!status.last}"> &gt; </c:if>
+			<li <c:if test="${status.last}"> class="active"</c:if>>${element}</li>
 		</c:forTokens>
-	</div>
+		<span class="pull-right"><a href="<c:url value="/logout"/>"><spring:message code="label.logout"/></a></span>
+    </ol>
 </div>
