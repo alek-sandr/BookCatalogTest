@@ -29,7 +29,7 @@
     <!-- Настройки бина dataSource будем хранить в отдельном файле -->
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:location="/WEB-INF/jdbc.properties" />
+          p:location="/WEB-INF/classes/jdbc.properties" />
 
     <!-- Непосредственно бин dataSource -->
     <bean id="dataSource"
